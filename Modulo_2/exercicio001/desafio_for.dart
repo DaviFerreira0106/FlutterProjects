@@ -1,5 +1,5 @@
 main() {
-  for (var texto = '#'; texto != '######'; texto += '#') {
+  for (var texto = '#'; texto != '#######'; texto += '#') {
     print(texto);
   }
 }
