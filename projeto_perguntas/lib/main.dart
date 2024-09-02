@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import './questao.dart';
 
 void main() => runApp(PerguntaApp());
 
-class PerguntaApp extends StatelessWidget {
+//Classe que gerência o estado da aplicação
+class _PerguntaAppState extends State<PerguntaApp> {
+  var _perguntaSelecionada = 0;
+
+  void _responder() {
+    setState(() {
+      _perguntaSelecionada++;
+    });
+    print(_perguntaSelecionada);
+  }
+
   final List<String> perguntas = [
     'Qual sua cor favorita ?',
     'Qual seu animal favorito ?',
@@ -17,22 +28,30 @@ class PerguntaApp extends StatelessWidget {
         ),
         body: Column(
           children: <Widget>[
-            Text(perguntas.elementAt(0)),
+            Questao(perguntas.elementAt(_perguntaSelecionada)),
             ElevatedButton(
-              onPressed: null,
-              child: Text('Resposta 1'),
+              onPressed: _responder,
+              child: const Text('Resposta 1'),
             ),
             ElevatedButton(
-              onPressed: null,
-              child: Text('Resposta 2'),
+              onPressed: _responder,
+              child: const Text('Resposta 2'),
             ),
             ElevatedButton(
-              onPressed: null,
-              child: Text('Resposta 3'),
+              onPressed: _responder,
+              child: const Text('Resposta 3'),
             ),
           ],
         ),
       ),
     );
+  }
+}
+
+//Classe que chama a classe que gerência o estado da aplicação
+class PerguntaApp extends StatefulWidget {
+  @override
+  _PerguntaAppState createState() {
+    return _PerguntaAppState();
   }
 }
