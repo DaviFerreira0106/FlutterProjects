@@ -28,7 +28,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column(
           children: <Widget>[
-            Questao(perguntas.elementAt(_perguntaSelecionada)),
+            Questao(texto: perguntas.elementAt(_perguntaSelecionada)),
             ElevatedButton(
               onPressed: _responder,
               child: const Text('Resposta 1'),

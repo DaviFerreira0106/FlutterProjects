@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class Questao extends StatelessWidget {
-  final String texto;
+  final String? texto;
 
-  Questao(this.texto);
+  Questao({super.key, this.texto});
 
   @override
   Widget build(BuildContext context) {
-    return Text(texto);
+    return Text(texto!);
   }
 }
