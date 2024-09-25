@@ -1,4 +1,4 @@
-# projeto_perguntas_oo
+# projeto_perguntas
 
 A new Flutter project.
 

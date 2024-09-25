@@ -1,6 +1,6 @@
 {
-    "name": "projeto_perguntas_oo",
-    "short_name": "projeto_perguntas_oo",
+    "name": "projeto_perguntas",
+    "short_name": "projeto_perguntas",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
