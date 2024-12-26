@@ -5,7 +5,7 @@ import 'gerente.dart';
 void main(){
   Funcionario objFuncionario = new Funcionario();
 
-  objFuncionario.setNome = "Davi Ferreira";
+  objFuncionario.setNome = "Soraia Fonseca";
   objFuncionario.setCpf = "123.456.789-00";
   objFuncionario.setSalario = 1000;
 
