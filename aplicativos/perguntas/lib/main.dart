@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:perguntas/questao.dart';
-import 'package:perguntas/resposta.dart';
+import 'package:perguntas/questionario.dart';
+import 'package:perguntas/resultado.dart';
 
 void main() {
   runApp(Perguntas());
@@ -15,28 +15,44 @@ class _PerguntasState extends State<Perguntas> {
         _perguntaIndex++;
       },
     );
-    print("Respondido!!!!!");
   }
 
-  final List<Map<String, Object>> perguntas = [
+  final List<Map<String, Object>> _perguntas = const [
     {
       "questao": "Qual sua cor favorita?",
-      "alternativa": ["Branco", "Verde", "Azul", "Vermelho"],
+      "alternativa": [
+        {"texto": "Branco", "ponto": 10},
+        {"texto": "Verde", "ponto": 8},
+        {"texto": "Azul", "ponto": 4},
+        {"texto": "Vermelho", "ponto": 1},
+      ],
     },
     {
       "questao": "Qual seu animal favorito?",
-      "alternativa": ["Leão", "Cobra", "Macaco", "Gavião"],
+      "alternativa": [
+        {"texto": "Leão", "ponto": 10},
+        {"texto": "Cobra", "ponto": 8},
+        {"texto": "Macaco", "ponto": 4},
+        {"texto": "Gavião", "ponto": 1},
+      ],
     },
     {
       "questao": "Qual seu instrutor favorito?",
-      "alternativa": ["Davi", "Laura", "Mariana", "Elenita"],
+      "alternativa": [
+        {"texto": "Davi", "ponto": 10},
+        {"texto": "Laura", "ponto": 8},
+        {"texto": "Mariana", "ponto": 4},
+        {"texto": "Elenita", "ponto": 1},
+      ],
     },
   ];
 
+  bool temPerguntaSelecionada() {
+    return _perguntaIndex < _perguntas.length;
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<String> listaResposta = perguntas.elementAt(_perguntaIndex).cast()["alternativa"];
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -45,20 +61,13 @@ class _PerguntasState extends State<Perguntas> {
           ),
         ),
         body: Center(
-          child: Column(
-            children: <Widget>[
-              Questao(
-                texto: perguntas.elementAt(_perguntaIndex).cast()['questao'],
-              ),
-              ...listaResposta
-                  .map(
-                    (texto) => Resposta(
-                      fn: _respoder,
-                      texto: texto,
-                    ),
-                  ),
-            ],
-          ),
+          child: temPerguntaSelecionada()
+              ? Questionario(
+                  perguntaIndex: _perguntaIndex,
+                  perguntas: _perguntas,
+                  fn: _respoder,
+                )
+              : const Resultado(),
         ),
       ),
     );
