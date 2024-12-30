@@ -8,41 +8,52 @@ void main() {
 
 class _PerguntasState extends State<Perguntas> {
   int _perguntaIndex = 0;
+  int _pontuacaoTotal = 0;
 
-  void _respoder() {
-    setState(
-      () {
-        _perguntaIndex++;
-      },
-    );
+  void _respoder(int pontuacao) {
+    if (temPerguntaSelecionada()) {
+      setState(
+        () {
+          _perguntaIndex++;
+          _pontuacaoTotal += pontuacao;
+        },
+      );
+    }
+  }
+
+  void _reiniciar() {
+    setState(() {
+      _perguntaIndex = 0;
+      _pontuacaoTotal = 0;
+    });
   }
 
   final List<Map<String, Object>> _perguntas = const [
     {
       "questao": "Qual sua cor favorita?",
       "alternativa": [
-        {"texto": "Branco", "ponto": 10},
-        {"texto": "Verde", "ponto": 8},
-        {"texto": "Azul", "ponto": 4},
-        {"texto": "Vermelho", "ponto": 1},
+        {"texto": "Branco", "pontuacao": 10},
+        {"texto": "Verde", "pontuacao": 8},
+        {"texto": "Azul", "pontuacao": 4},
+        {"texto": "Vermelho", "pontuacao": 1},
       ],
     },
     {
       "questao": "Qual seu animal favorito?",
       "alternativa": [
-        {"texto": "Leão", "ponto": 10},
-        {"texto": "Cobra", "ponto": 8},
-        {"texto": "Macaco", "ponto": 4},
-        {"texto": "Gavião", "ponto": 1},
+        {"texto": "Leão", "pontuacao": 10},
+        {"texto": "Cobra", "pontuacao": 8},
+        {"texto": "Macaco", "pontuacao": 4},
+        {"texto": "Gavião", "pontuacao": 1},
       ],
     },
     {
       "questao": "Qual seu instrutor favorito?",
       "alternativa": [
-        {"texto": "Davi", "ponto": 10},
-        {"texto": "Laura", "ponto": 8},
-        {"texto": "Mariana", "ponto": 4},
-        {"texto": "Elenita", "ponto": 1},
+        {"texto": "Davi", "pontuacao": 10},
+        {"texto": "Laura", "pontuacao": 8},
+        {"texto": "Mariana", "pontuacao": 4},
+        {"texto": "Elenita", "pontuacao": 1},
       ],
     },
   ];
@@ -67,7 +78,7 @@ class _PerguntasState extends State<Perguntas> {
                   perguntas: _perguntas,
                   fn: _respoder,
                 )
-              : const Resultado(),
+              : Resultado(pontuacao: _pontuacaoTotal, fnReiniciar: _reiniciar,),
         ),
       ),
     );
