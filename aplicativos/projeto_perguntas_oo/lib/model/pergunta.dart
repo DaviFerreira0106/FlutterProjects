@@ -1,4 +1,4 @@
-abstract class Pergunta {
+class Pergunta {
   // Atributos
   final List<Map<String, Object>> _listaPergunta = const [
     {
@@ -34,10 +34,10 @@ abstract class Pergunta {
   int? _pontuacaoTotal;
 
   // Construtor
-  Pergunta({int? index, int? pontuacaoTotal}){
-    setListaIndex = index!;
-    setPontuacaoTotal = pontuacaoTotal!;
-  }
+  // Pergunta({int? index, int? pontuacaoTotal}){
+  //   setListaIndex = index!;
+  //   setPontuacaoTotal = pontuacaoTotal!;
+  // }
 
   // Getters e Setters
   set setListaIndex(int index) {
@@ -61,7 +61,7 @@ abstract class Pergunta {
   }
 
   // Metodos
-  void responder(int pontuacao);
+  void responder(int pontuacao){}
 
-  void reiniciar();
+  void reiniciar(){}
 }
