@@ -20,11 +20,16 @@ class Resposta extends Pergunta {
 
   // Metodos
   @override
-  void responder(int pontuacao){
-    int total = 0;
-    total += pontuacao;
+  void responder({int? pontuacao}){
+    // Incremento do index
+    int _index = getListaIndex;
+    _index++; 
+    setListaIndex = _index;
 
-    setPontuacaoTotal = total;
+    // Calculo da pontuação total
+    int _total = getPontuacaoTotal;
+    _total += pontuacao!;
+    setPontuacaoTotal = _total;
   }
 
   @override

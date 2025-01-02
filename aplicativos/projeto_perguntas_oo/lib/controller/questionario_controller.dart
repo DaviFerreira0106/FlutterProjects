@@ -5,7 +5,7 @@ import 'package:projeto_perguntas_oo/view/questao_view.dart';
 
 class QuestionarioController extends StatelessWidget {
   final int perguntaIndex;
-  final void Function(int) fn;
+  final void Function({int? pontuacao}) fn;
 
   const QuestionarioController({
     super.key,

@@ -9,7 +9,7 @@ class PerguntaControllerState extends State<PerguntaController> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      obj.responder(pontuacao)
+      obj.responder();
     });
     return MaterialApp(
       home: Scaffold(
@@ -18,7 +18,7 @@ class PerguntaControllerState extends State<PerguntaController> {
             child: Text("Perguntas"),
           ),
         ),
-        body: QuestionarioController(perguntaIndex: perguntaIndex, fn: fn),
+        body: QuestionarioController(perguntaIndex: obj.getListaIndex, fn: obj.responder),
       ),
     );
   }

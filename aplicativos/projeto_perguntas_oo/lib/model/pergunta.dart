@@ -61,7 +61,7 @@ class Pergunta {
   }
 
   // Metodos
-  void responder(int pontuacao){}
+  void responder({int? pontuacao}){}
 
   void reiniciar(){}
 }
