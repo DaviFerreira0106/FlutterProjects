@@ -22,14 +22,14 @@ class Resposta extends Pergunta {
   @override
   void responder(int pontuacao){
     // Incremento do index
-    int _index = getListaIndex;
-    _index++; 
-    setListaIndex = _index;
+    int index = getListaIndex;
+    index++; 
+    setListaIndex = index;
 
     // Calculo da pontuação total
-    int _total = getPontuacaoTotal;
-    _total += pontuacao;
-    setPontuacaoTotal = _total;
+    int total = getPontuacaoTotal;
+    total += pontuacao;
+    setPontuacaoTotal = total;
   }
 
   @override

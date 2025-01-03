@@ -87,6 +87,8 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
 //Classe que chama a classe que gerência o estado da aplicação
 class PerguntaApp extends StatefulWidget {
+  const PerguntaApp({super.key});
+
   @override
   _PerguntaAppState createState() {
     return _PerguntaAppState();

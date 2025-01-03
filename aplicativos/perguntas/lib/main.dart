@@ -86,6 +86,8 @@ class _PerguntasState extends State<Perguntas> {
 }
 
 class Perguntas extends StatefulWidget {
+  const Perguntas({super.key});
+
   @override
   _PerguntasState createState() {
     return _PerguntasState();
