@@ -53,15 +53,15 @@ class Pergunta {
   }
 
   int get getListaIndex {
-    return _listaIndex!;
+    return _listaIndex == null ? 0 : _listaIndex!;
   }
 
   int get getPontuacaoTotal {
-    return _pontuacaoTotal!;
+    return _pontuacaoTotal == null ? 0 : _pontuacaoTotal!;
   }
 
   // Metodos
-  void responder({int? pontuacao}){}
+  void responder(int pontuacao){}
 
   void reiniciar(){}
 }

@@ -7,12 +7,14 @@ class QuestaoView extends StatelessWidget {
   const QuestaoView({super.key, this.objPergunta});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
-      child: Text(
-        objPergunta!.getTexto,
-        style: const TextStyle(fontSize: 25),
+      child: Center(
+        child: Text(
+          objPergunta!.getTexto,
+          style: const TextStyle(fontSize: 25),
+        ),
       ),
     );
   }

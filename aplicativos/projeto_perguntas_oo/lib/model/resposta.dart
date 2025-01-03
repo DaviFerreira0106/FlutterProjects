@@ -20,7 +20,7 @@ class Resposta extends Pergunta {
 
   // Metodos
   @override
-  void responder({int? pontuacao}){
+  void responder(int pontuacao){
     // Incremento do index
     int _index = getListaIndex;
     _index++; 
@@ -28,7 +28,7 @@ class Resposta extends Pergunta {
 
     // Calculo da pontuação total
     int _total = getPontuacaoTotal;
-    _total += pontuacao!;
+    _total += pontuacao;
     setPontuacaoTotal = _total;
   }
 
