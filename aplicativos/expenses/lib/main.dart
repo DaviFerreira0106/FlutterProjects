@@ -15,8 +15,39 @@ class ExpensesApp extends StatelessWidget {
     return MaterialApp(
       home: MyHomePage(),
       theme: ThemeData(
-        us
-        primaryColor: Colors.green,
+        useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: TextStyle(
+                fontFamily: 'Quicksand',
+              ),
+              titleMedium: TextStyle(
+                fontFamily: 'Quicksand',
+              ),
+              titleSmall: TextStyle(
+                fontFamily: 'Quicksand',
+              ),
+              labelLarge: TextStyle(
+                fontFamily: 'OpenSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+              labelMedium: TextStyle(
+                fontFamily: 'OpenSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+              labelSmall: TextStyle(
+                fontFamily: 'OpenSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+            ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.amber,
+          primary: Colors.purple,
+          secondary: const Color.fromARGB(255, 92, 80, 42),
+        ),
       ),
     );
   }
@@ -33,18 +64,18 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transaction = [
-    Transaction(
-      id: "t1",
-      title: "Novo Tênis de Corrida",
-      value: 380.80,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: "t2",
-      title: "Conta de luz",
-      value: 211.60,
-      date: DateTime.now(),
-    )
+    // Transaction(
+    //   id: "t1",
+    //   title: "Novo Tênis de Corrida",
+    //   value: 380.80,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: "t2",
+    //   title: "Conta de luz",
+    //   value: 211.60,
+    //   date: DateTime.now(),
+    // )
   ];
 
   void _addTransaction(String title, double value) {
