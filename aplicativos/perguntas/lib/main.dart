@@ -3,7 +3,7 @@ import 'package:perguntas/questionario.dart';
 import 'package:perguntas/resultado.dart';
 
 void main() {
-  runApp(Perguntas());
+  runApp(const Perguntas());
 }
 
 class _PerguntasState extends State<Perguntas> {

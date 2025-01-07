@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './questionario.dart';
 import './resultado.dart';
 
-void main() => runApp(PerguntaApp());
+void main() => runApp(const PerguntaApp());
 
 //Classe que gerência o estado da aplicação
 class _PerguntaAppState extends State<PerguntaApp> {
