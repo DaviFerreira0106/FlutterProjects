@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double)? onSubmit;
@@ -12,18 +13,35 @@ class TransactionForm extends StatefulWidget {
 }
 
 class TransactionFormState extends State<TransactionForm> {
-  final titleController = TextEditingController();
-  final valueController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _valueController = TextEditingController();
+  DateTime? _datePiker;
 
   void _submitForm() {
-    final String title = titleController.text;
-    final double value = double.tryParse(valueController.text) ?? 0.0;
+    final String title = _titleController.text;
+    final double value = double.tryParse(_valueController.text) ?? 0.0;
 
     if (title.isEmpty || value <= 0) {
       return;
     }
 
     widget.onSubmit!(title, value);
+  }
+
+  _showDatePicker() {
+    showDatePicker(
+      context: context,
+      firstDate: DateTime(2024),
+      lastDate: DateTime.now(),
+    ).then((date) {
+      if (date == null) {
+        return;
+      }
+
+      setState(() {
+        _datePiker = date;
+      });
+    });
   }
 
   @override
@@ -33,22 +51,46 @@ class TransactionFormState extends State<TransactionForm> {
       child: Column(
         children: [
           TextField(
-            controller: titleController,
+            controller: _titleController,
             decoration: InputDecoration(labelText: "Título"),
           ),
           TextField(
-            controller: valueController,
+            controller: _valueController,
             keyboardType: TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(labelText: "R\$ Valor"),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 20, bottom: 20),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    _datePiker == null
+                        ? "Nenhuma Data Selecionada!"
+                        : "Data Selecionada: ${DateFormat("dd/MM/yyyy").format(_datePiker!)}",
+                  ),
+                ),
+                TextButton(
+                  onPressed: _showDatePicker,
+                  child: Text("Selecionar Data"),
+                ),
+              ],
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              TextButton(
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Theme.of(context).buttonTheme.colorScheme!.primary,
+                ),
                 onPressed: _submitForm,
                 child: Text(
                   "Nova Transação",
-                  style: TextStyle(color: Theme.of(context).primaryColor),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],

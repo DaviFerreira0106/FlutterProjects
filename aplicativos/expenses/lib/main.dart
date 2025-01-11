@@ -44,6 +44,13 @@ class ExpensesApp extends StatelessWidget {
                 fontSize: 12,
               ),
             ),
+        buttonTheme: ButtonThemeData().copyWith(
+          
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.purple,
+            primary: Colors.purple,
+          ),
+        ),
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.amber,
           primary: Colors.purple,
@@ -76,7 +83,13 @@ class MyHomePageState extends State<MyHomePage> {
       title: "Conta de luz",
       value: 211.60,
       date: DateTime.now().subtract(Duration(days: 3)),
-    )
+    ),
+    Transaction(
+      id: "t2",
+      title: "Conta #1",
+      value: 1000000.60,
+      date: DateTime.now(),
+    ),
   ];
 
   List<Transaction> get _recentTransactions {
