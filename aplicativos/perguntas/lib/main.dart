@@ -6,7 +6,7 @@ void main() {
   runApp(const Perguntas());
 }
 
-class _PerguntasState extends State<Perguntas> {
+class PerguntasState extends State<Perguntas> {
   int _perguntaIndex = 0;
   int _pontuacaoTotal = 0;
 
@@ -89,7 +89,7 @@ class Perguntas extends StatefulWidget {
   const Perguntas({super.key});
 
   @override
-  _PerguntasState createState() {
-    return _PerguntasState();
+  PerguntasState createState() {
+    return PerguntasState();
   }
 }

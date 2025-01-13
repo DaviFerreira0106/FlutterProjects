@@ -20,8 +20,8 @@ main() {
   bool isCaro = false;
   bool isFragil = true;
 
-  print(isCaro && isFragil);
-  print(isFragil || isCaro);
+  // print(isCaro && isFragil);
+  // print(isFragil || isCaro);
   print(isCaro ^ isFragil);
   print(!isFragil);
   print(!isCaro);

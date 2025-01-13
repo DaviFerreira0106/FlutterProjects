@@ -40,6 +40,6 @@ void main(){
   print(estaFrio || estaCalor); // true
   print(estaFrio || estaChovendo); // false
   print(estaComCeuLimpo && estaCalor && estaFrio); // false
-  print(estaChovendo || estaFrio && estaCalor); // false
+  print(estaChovendo || estaFrio); // false
   print(estaChovendo || estaFrio || estaCalor); // true
 }

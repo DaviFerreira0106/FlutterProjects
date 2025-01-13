@@ -5,7 +5,7 @@ import './resultado.dart';
 void main() => runApp(const PerguntaApp());
 
 //Classe que gerência o estado da aplicação
-class _PerguntaAppState extends State<PerguntaApp> {
+class PerguntaAppState extends State<PerguntaApp> {
   int _perguntaSelecionada = 0;
   int _pontuacaoTotal = 0;
 
@@ -90,7 +90,7 @@ class PerguntaApp extends StatefulWidget {
   const PerguntaApp({super.key});
 
   @override
-  _PerguntaAppState createState() {
-    return _PerguntaAppState();
+  PerguntaAppState createState() {
+    return PerguntaAppState();
   }
 }

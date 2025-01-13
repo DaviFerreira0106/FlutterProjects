@@ -14,4 +14,7 @@ void main(){
 
   const List lista3 = ['Computador', 'Mouse', 'Teclado', 'Monitor', 'Gabinete'];
   // lista3.add('Modem'); Erro na hora de compilação
+
+  print(lista2);
+  print(lista3);
 }
