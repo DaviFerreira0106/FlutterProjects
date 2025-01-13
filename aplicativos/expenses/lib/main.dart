@@ -45,7 +45,6 @@ class ExpensesApp extends StatelessWidget {
               ),
             ),
         buttonTheme: ButtonThemeData().copyWith(
-          
           colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.purple,
             primary: Colors.purple,
@@ -55,6 +54,7 @@ class ExpensesApp extends StatelessWidget {
           seedColor: Colors.amber,
           primary: Colors.purple,
           secondary: const Color.fromARGB(255, 92, 80, 42),
+          error: Colors.red,
         ),
       ),
     );
@@ -71,26 +71,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transaction = [
-    Transaction(
-      id: "t1",
-      title: "Novo Tênis de Corrida",
-      value: 380.80,
-      date: DateTime.now().subtract(Duration(days: 4)),
-    ),
-    Transaction(
-      id: "t2",
-      title: "Conta de luz",
-      value: 211.60,
-      date: DateTime.now().subtract(Duration(days: 3)),
-    ),
-    Transaction(
-      id: "t2",
-      title: "Conta #1",
-      value: 1000000.60,
-      date: DateTime.now(),
-    ),
-  ];
+  final List<Transaction> _transaction = [];
 
   List<Transaction> get _recentTransactions {
     return _transaction
@@ -99,12 +80,18 @@ class MyHomePageState extends State<MyHomePage> {
         .toList();
   }
 
-  void _addTransaction(String title, double value) {
+  void _removeTrsansaction(String id) {
+    setState(() {
+      _transaction.removeWhere((tr) => tr.id == id);
+    });
+  }
+
+  void _addTransaction(String title, double value, DateTime date) {
     final Transaction newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
@@ -141,7 +128,10 @@ class MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(recentTransaction: _recentTransactions),
-            TransactionList(transaction: _transaction),
+            TransactionList(
+              transaction: _transaction,
+              onRemove: _removeTrsansaction,
+            ),
           ],
         ),
       ),
