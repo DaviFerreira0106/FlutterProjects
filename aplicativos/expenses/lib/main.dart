@@ -114,9 +114,20 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool _isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
     final AppBar appBar = AppBar(
       title: Text("Despesas Pessoais"),
       actions: [
+        if (_isLandscape)
+          IconButton(
+            onPressed: () => setState(() {
+              _showChart = !_showChart;
+            }),
+            icon: Icon(
+                _showChart ? Icons.list_rounded : Icons.show_chart_rounded),
+          ),
         IconButton(
           onPressed: () => _openTransactionFormModal(context),
           icon: Icon(Icons.add),
@@ -134,28 +145,12 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: 4),
-                  child: Text("Exibir Gráfico"),
-                ),
-                Switch(
-                    value: _showChart,
-                    onChanged: (value) {
-                      setState(() {
-                        _showChart = value;
-                      });
-                    }),
-              ],
-            ),
-            if (_showChart)
+            if (_showChart || !_isLandscape)
               SizedBox(
-                height: mediaHeight * 0.2,
+                height: mediaHeight * (_isLandscape ? 0.6 : 0.2),
                 child: Chart(recentTransaction: _recentTransactions),
               ),
-            if (!_showChart)
+            if (!_showChart || !_isLandscape)
               SizedBox(
                 height: mediaHeight * 0.8,
                 child: TransactionList(
