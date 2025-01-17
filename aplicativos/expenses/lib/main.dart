@@ -50,6 +50,7 @@ class ExpensesApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.purple,
             primary: Colors.purple,
+            secondary: Colors.white,
           ),
         ),
         colorScheme: ColorScheme.fromSeed(
@@ -165,24 +166,26 @@ class MyHomePageState extends State<MyHomePage> {
         appBar.preferredSize.height -
         mediaQuery.padding.top;
 
-    final Widget bodyPage = SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (_showChart || !isLandscape)
-            SizedBox(
-              height: mediaHeight * (isLandscape ? 0.6 : 0.2),
-              child: Chart(recentTransaction: _recentTransactions),
-            ),
-          if (!_showChart || !isLandscape)
-            SizedBox(
-              height: mediaHeight * (isLandscape ? 1 : 0.8),
-              child: TransactionList(
-                transaction: _transaction,
-                onRemove: _removeTrsansaction,
+    final Widget bodyPage = SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (_showChart || !isLandscape)
+              SizedBox(
+                height: mediaHeight * (isLandscape ? 0.6 : 0.2),
+                child: Chart(recentTransaction: _recentTransactions),
               ),
-            ),
-        ],
+            if (!_showChart || !isLandscape)
+              SizedBox(
+                height: mediaHeight * (isLandscape ? 1 : 0.8),
+                child: TransactionList(
+                  transaction: _transaction,
+                  onRemove: _removeTrsansaction,
+                ),
+              ),
+          ],
+        ),
       ),
     );
 
