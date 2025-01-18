@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:expenses/components/adaptative_button.dart';
 import 'package:expenses/components/adaptative_textfield.dart';
-import 'dart:io';
+import 'package:expenses/components/adaptative_date_pecker.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double, DateTime)? onSubmit;
@@ -31,63 +30,45 @@ class TransactionFormState extends State<TransactionForm> {
     widget.onSubmit!(title, value, _datePiker);
   }
 
-  _showDatePicker() {
-    showDatePicker(
-      context: context,
-      firstDate: DateTime(2024),
-      lastDate: DateTime.now(),
-    ).then((date) {
-      if (date == null) {
-        return;
-      }
-
-      setState(() {
-        _datePiker = date;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          AdaptativeTextField(
-            label: "Titulo",
-            textController: _titleController,
-          ),
-          AdaptativeTextField(
-            label: "R\$ Valor",
-            textController: _valueController,
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 20, bottom: 20),
-            child: Row(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 10,
+          right: 10,
+          left: 10,
+          bottom: 10 + MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
+          children: [
+            AdaptativeTextField(
+              label: "Titulo",
+              textController: _titleController,
+            ),
+            AdaptativeTextField(
+              label: "R\$ Valor",
+              textController: _valueController,
+            ),
+            AdaptativeDatePicker(
+              selectDate: _datePiker,
+              onDateChanged: (newDate) {
+                setState(() {
+                  _datePiker = newDate;
+                });
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (Platform.isAndroid)
-                  Expanded(
-                    child: Text(
-                      "Data Selecionada: ${DateFormat("dd/MM/yyyy").format(_datePiker)}",
-                    ),
-                  ),
-                TextButton(
-                  onPressed: _showDatePicker,
-                  child: Text("Selecionar Data"),
+                AdaptativeButton(
+                  label: "Nova Transação",
+                  onPressed: _submitForm,
                 ),
               ],
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              AdaptativeButton(
-                label: "Nova Transação",
-                onPressed: _submitForm,
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

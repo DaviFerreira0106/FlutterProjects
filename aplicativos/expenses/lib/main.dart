@@ -112,7 +112,7 @@ class MyHomePageState extends State<MyHomePage> {
             builder: (_) {
               return Container(
                 color: Colors.white,
-                height: MediaQuery.of(context).size.height * 0.4,
+                height: MediaQuery.of(context).size.height * 0.5,
                 child: TransactionForm(
                   onSubmit: _addTransaction,
                 ),
