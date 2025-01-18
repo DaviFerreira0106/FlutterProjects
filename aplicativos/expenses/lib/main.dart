@@ -106,13 +106,26 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   _openTransactionFormModal(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return TransactionForm(
-            onSubmit: _addTransaction,
-          );
-        });
+    Platform.isIOS
+        ? showCupertinoModalPopup(
+            context: context,
+            builder: (_) {
+              return Container(
+                color: Colors.white,
+                height: MediaQuery.of(context).size.height * 0.4,
+                child: TransactionForm(
+                  onSubmit: _addTransaction,
+                ),
+              );
+            },
+          )
+        : showModalBottomSheet(
+            context: context,
+            builder: (_) {
+              return TransactionForm(
+                onSubmit: _addTransaction,
+              );
+            });
   }
 
   Widget _getIconButton({IconData? icon, Function()? fn}) {

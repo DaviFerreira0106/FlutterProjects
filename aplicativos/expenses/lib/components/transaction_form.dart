@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:expenses/components/adaptative_button.dart';
+import 'package:expenses/components/adaptative_textfield.dart';
+import 'dart:io';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double, DateTime)? onSubmit;
@@ -51,24 +53,24 @@ class TransactionFormState extends State<TransactionForm> {
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          TextField(
-            controller: _titleController,
-            decoration: InputDecoration(labelText: "Título"),
+          AdaptativeTextField(
+            label: "Titulo",
+            textController: _titleController,
           ),
-          TextField(
-            controller: _valueController,
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
-            decoration: InputDecoration(labelText: "R\$ Valor"),
+          AdaptativeTextField(
+            label: "R\$ Valor",
+            textController: _valueController,
           ),
           Container(
             margin: EdgeInsets.only(top: 20, bottom: 20),
             child: Row(
               children: [
-                Expanded(
-                  child: Text(
-                    "Data Selecionada: ${DateFormat("dd/MM/yyyy").format(_datePiker)}",
+                if (Platform.isAndroid)
+                  Expanded(
+                    child: Text(
+                      "Data Selecionada: ${DateFormat("dd/MM/yyyy").format(_datePiker)}",
+                    ),
                   ),
-                ),
                 TextButton(
                   onPressed: _showDatePicker,
                   child: Text("Selecionar Data"),
