@@ -5,10 +5,10 @@ import 'dart:io';
 
 // ignore: must_be_immutable
 class AdaptativeDatePicker extends StatelessWidget {
-  DateTime? selectDate;
-  void Function(DateTime)? onDateChanged;
+  final DateTime? selectDate;
+  final void Function(DateTime)? onDateChanged;
 
-  AdaptativeDatePicker({super.key, this.onDateChanged, this.selectDate});
+  const AdaptativeDatePicker({super.key, this.onDateChanged, this.selectDate});
 
   _showDatePicker(BuildContext context) {
     showDatePicker(
@@ -19,7 +19,7 @@ class AdaptativeDatePicker extends StatelessWidget {
       if (date == null) {
         return;
       }
-      selectDate = date;
+      onDateChanged!(date);
     });
   }
 
