@@ -49,14 +49,14 @@ class AdaptativeListTile extends StatelessWidget {
                                 color: Theme.of(context).colorScheme.error),
                           ),
                           icon: Icon(
-                            Icons.delete,
+                            CupertinoIcons.delete,
                             color: Theme.of(context).colorScheme.error,
                           ),
                         )
                       : IconButton(
                           onPressed: () => onRemove!(tr!.id),
                           icon: Icon(
-                            Icons.delete,
+                            CupertinoIcons.delete,
                             color: Theme.of(context).colorScheme.error,
                           ),
                         ),
