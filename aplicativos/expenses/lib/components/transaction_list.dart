@@ -1,6 +1,6 @@
 import 'package:expenses/models/transaction.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:expenses/components/adaptative_list_tile.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction>? transaction;
@@ -37,56 +37,7 @@ class TransactionList extends StatelessWidget {
             itemCount: transaction!.length,
             itemBuilder: (ctx, index) {
               final Transaction tr = transaction!.elementAt(index);
-              return Card(
-                elevation: 1,
-                margin: EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 5,
-                ),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    child: Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: FittedBox(
-                        child: Text(
-                          "R\$${tr.value.toStringAsFixed(2)}",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                  title: Text(
-                    tr.title,
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                  subtitle: Text(
-                    DateFormat(" dd MMM y").format(tr.date),
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  trailing: MediaQuery.of(context).size.width > 480
-                      ? TextButton.icon(
-                          onPressed: () => onRemove!(tr.id),
-                          label: Text(
-                            "Excluir",
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.error),
-                          ),
-                          icon: Icon(
-                            Icons.delete,
-                            color: Theme.of(context).colorScheme.error,
-                          ),
-                        )
-                      : IconButton(
-                          onPressed: () => onRemove!(tr.id),
-                          icon: Icon(
-                            Icons.delete,
-                            color: Theme.of(context).colorScheme.error,
-                          ),
-                        ),
-                ),
-              );
+              return AdaptativeListTile(tr: tr, onRemove: onRemove);
             },
           );
   }
