@@ -9,7 +9,7 @@ class PageCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pink,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: Center(
           child: Text(
             "Vamos cozinhar?",
@@ -17,7 +17,6 @@ class PageCategories extends StatelessWidget {
           ),
         ),
       ),
-      
       body: GridView(
         padding: const EdgeInsets.all(25),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
