@@ -18,13 +18,9 @@ class PageCategoriesMeals extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
-        title: Center(
-          child: Text(
-            category.title,
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
+        title: Text(
+          category.title,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
       body: ListView.builder(
