@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
+import 'package';
 
 class MealItem extends StatelessWidget {
   final Meal meal;
@@ -8,6 +9,10 @@ class MealItem extends StatelessWidget {
     super.key,
     required this.meal,
   });
+
+  void _selectMeal(BuildContext context) {
+    Navigator.of(context).pushNamed(),
+  }
 
   @override
   Widget build(BuildContext context) {
