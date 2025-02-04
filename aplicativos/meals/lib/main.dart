@@ -42,6 +42,7 @@ class MealsApp extends StatelessWidget {
           foregroundColor: Colors.white,
           titleTextStyle: TextStyle(
             fontFamily: "Raleway",
+            fontSize: 24,
           ),
           centerTitle: true,
         ),

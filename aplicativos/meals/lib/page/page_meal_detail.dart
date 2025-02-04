@@ -95,9 +95,17 @@ class PageMealDetail extends StatelessWidget {
                   );
                 },
               ),
-            )
+            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.of(context).pop(meal.title),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Icon(Icons.star),
       ),
     );
   }

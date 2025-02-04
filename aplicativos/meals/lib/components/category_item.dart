@@ -11,10 +11,12 @@ class CategoryItem extends StatelessWidget {
   });
 
   void _selectCategory(BuildContext context) {
-    Navigator.of(context).pushNamed(
+    Navigator.of(context)
+        .pushNamed(
       AppRoutes.pageCategoriesMeals,
       arguments: category,
     );
+        
   }
 
   @override

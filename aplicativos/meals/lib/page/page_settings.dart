@@ -10,9 +10,6 @@ class PageSettings extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "Configurações",
-          style: TextStyle(
-            fontSize: 25,
-          ),
         ),
       ),
       drawer: MainDrawer(),
