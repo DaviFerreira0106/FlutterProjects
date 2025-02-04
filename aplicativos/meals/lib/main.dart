@@ -3,6 +3,7 @@ import 'package:meals/page/page_categories_meals.dart';
 import 'package:meals/utils/app_routes.dart';
 import 'package:meals/page/page_meal_detail.dart';
 import 'package:meals/page/page_tabs.dart';
+import 'package:meals/page/page_settings.dart';
 
 void main() => runApp(MealsApp());
 
@@ -39,8 +40,10 @@ class MealsApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.pink,
           foregroundColor: Colors.white,
+          titleTextStyle: TextStyle(
+            fontFamily: "Raleway",
+          ),
           centerTitle: true,
-          
         ),
         canvasColor: Color.fromRGBO(255, 254, 229, 1),
         colorScheme: ColorScheme.fromSeed(
@@ -53,6 +56,7 @@ class MealsApp extends StatelessWidget {
         AppRoutes.home: (context) => PageTabs(),
         AppRoutes.pageCategoriesMeals: (context) => PageCategoriesMeals(),
         AppRoutes.pageMealDetail: (context) => PageMealDetail(),
+        AppRoutes.settings: (context) => PageSettings(),
       },
     );
   }
