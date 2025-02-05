@@ -4,11 +4,22 @@ import 'package:meals/utils/app_routes.dart';
 import 'package:meals/page/page_meal_detail.dart';
 import 'package:meals/page/page_tabs.dart';
 import 'package:meals/page/page_settings.dart';
+import 'package:meals/models/meal.dart';
+import 'package:meals/data/dummy_data.dart';
 
 void main() => runApp(MealsApp());
 
-class MealsApp extends StatelessWidget {
+class MealsApp extends StatefulWidget {
   const MealsApp({super.key});
+
+  @override
+  MealsAppState createState() {
+    return MealsAppState();
+  }
+}
+
+class MealsAppState extends State<MealsApp> {
+  List<Meal> _availableMeal = dummyMeals;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +66,9 @@ class MealsApp extends StatelessWidget {
       ),
       routes: {
         AppRoutes.home: (context) => PageTabs(),
-        AppRoutes.pageCategoriesMeals: (context) => PageCategoriesMeals(),
+        AppRoutes.pageCategoriesMeals: (context) => PageCategoriesMeals(
+              listMeal: _availableMeal,
+            ),
         AppRoutes.pageMealDetail: (context) => PageMealDetail(),
         AppRoutes.settings: (context) => PageSettings(),
       },
