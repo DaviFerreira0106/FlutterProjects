@@ -3,7 +3,14 @@ import 'package:meals/components/main_drawer.dart';
 import 'package:meals/models/settings.dart';
 
 class PageSettings extends StatefulWidget {
-  const PageSettings({super.key});
+  final void Function(Settings) onChangedFilter;
+  final Settings settingsState;
+
+  const PageSettings({
+    super.key,
+    required this.onChangedFilter,
+    required this.settingsState,
+  });
 
   @override
   PageSettingsState createState() {
@@ -19,14 +26,22 @@ class PageSettingsState extends State<PageSettings> {
     required void Function(bool) onChanged,
   }) {
     return SwitchListTile.adaptive(
-      title: Text(title),
-      subtitle: Text(subtitle),
-      value: value,
-      onChanged: onChanged,
-    );
+        title: Text(title),
+        subtitle: Text(subtitle),
+        value: value,
+        onChanged: (value) {
+          onChanged(value);
+          widget.onChangedFilter(settings!);
+        });
   }
 
-  final Settings settings = Settings();
+  Settings? settings;  
+
+  @override
+  void initState(){
+    super.initState();
+    settings = widget.settingsState;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,33 +69,33 @@ class PageSettingsState extends State<PageSettings> {
                 _createSwitch(
                   title: "Sem Glúten",
                   subtitle: "Só exibe comidas sem glúten ",
-                  value: settings.isGlutenFree,
+                  value: settings!.isGlutenFree,
                   onChanged: (value) => setState(
-                    () => settings.isGlutenFree = value,
+                    () => settings!.isGlutenFree = value,
                   ),
                 ),
                 _createSwitch(
                   title: "Sem Lactose",
                   subtitle: "Só exibe comidas sem lactose",
-                  value: settings.isLactoseFree,
+                  value: settings!.isLactoseFree,
                   onChanged: (value) => setState(
-                    () => settings.isLactoseFree = value,
+                    () => settings!.isLactoseFree = value,
                   ),
                 ),
                 _createSwitch(
                   title: "Vegana",
                   subtitle: "Só exibe comidas veganas",
-                  value: settings.isVegan,
+                  value: settings!.isVegan,
                   onChanged: (value) => setState(
-                    () => settings.isVegan = value,
+                    () => settings!.isVegan = value,
                   ),
                 ),
                 _createSwitch(
                   title: "Vegetariana",
                   subtitle: "Só exibe comidas vegetarianas",
-                  value: settings.isVegetarian,
+                  value: settings!.isVegetarian,
                   onChanged: (value) => setState(
-                    () => settings.isVegetarian = value,
+                    () => settings!.isVegetarian = value,
                   ),
                 ),
               ],

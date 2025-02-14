@@ -6,6 +6,7 @@ import 'package:meals/page/page_tabs.dart';
 import 'package:meals/page/page_settings.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/data/dummy_data.dart';
+import 'package:meals/models/settings.dart';
 
 void main() => runApp(MealsApp());
 
@@ -20,6 +21,25 @@ class MealsApp extends StatefulWidget {
 
 class MealsAppState extends State<MealsApp> {
   List<Meal> _availableMeal = dummyMeals;
+  Settings setttingsState = Settings();
+
+  void _filterMeals(Settings settings) {
+    setState(() {
+      setttingsState = settings;
+
+      _availableMeal = dummyMeals.where((meal) {
+        final filterGluten = settings.isGlutenFree && !meal.isGlutenFree;
+        final filterLactose = settings.isLactoseFree && !meal.isLactoseFree;
+        final filterVegen = settings.isVegan && !meal.isVegan;
+        final filterVegetarian = settings.isVegetarian && !meal.isVegetarian;
+
+        return !filterVegetarian &&
+            !filterVegen &&
+            !filterLactose &&
+            !filterGluten;
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +90,10 @@ class MealsAppState extends State<MealsApp> {
               listMeal: _availableMeal,
             ),
         AppRoutes.pageMealDetail: (context) => PageMealDetail(),
-        AppRoutes.settings: (context) => PageSettings(),
+        AppRoutes.settings: (context) => PageSettings(
+              onChangedFilter: _filterMeals,
+              settingsState: setttingsState,
+            ),
       },
     );
   }
