@@ -21,6 +21,7 @@ class MealsApp extends StatefulWidget {
 
 class MealsAppState extends State<MealsApp> {
   List<Meal> _availableMeal = dummyMeals;
+  final List<Meal> _listFavorite = [];
   Settings setttingsState = Settings();
 
   void _filterMeals(Settings settings) {
@@ -39,6 +40,18 @@ class MealsAppState extends State<MealsApp> {
             !filterGluten;
       }).toList();
     });
+  }
+
+  void _onToggleFavorite(Meal meal) {
+    setState(
+      () => _listFavorite.contains(meal)
+          ? _listFavorite.remove(meal)
+          : _listFavorite.add(meal),
+    );
+  }
+
+  bool _isFavorite(Meal meal) {
+    return _listFavorite.contains(meal);
   }
 
   @override
@@ -85,11 +98,16 @@ class MealsAppState extends State<MealsApp> {
         ),
       ),
       routes: {
-        AppRoutes.home: (context) => PageTabs(),
+        AppRoutes.home: (context) => PageTabs(
+              listMeals: _listFavorite,
+            ),
         AppRoutes.pageCategoriesMeals: (context) => PageCategoriesMeals(
               listMeal: _availableMeal,
             ),
-        AppRoutes.pageMealDetail: (context) => PageMealDetail(),
+        AppRoutes.pageMealDetail: (context) => PageMealDetail(
+              onToggleFavorite: _onToggleFavorite,
+              isFavorite: _isFavorite,
+            ),
         AppRoutes.settings: (context) => PageSettings(
               onChangedFilter: _filterMeals,
               settingsState: setttingsState,
