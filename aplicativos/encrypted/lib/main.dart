@@ -16,16 +16,52 @@ class CriptografadorApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({super.key});
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
-  
+  @override
+  MyHomePageState createState() {
+    return MyHomePageState();
+  }
+}
 
-  //Implementação de criptografia
-  final keys = encrypt.Key.fromUtf8("MYKEY");
-  final iv = encrypt.IV.fromLength(16);
+class MyHomePageState extends State<MyHomePage> {
+  //Atributos de controle
+  TextEditingController labelText = TextEditingController();
+  dynamic keys = "";
+  String textEncrypted = "";
+  String dataCrypt = "";
+  String decrypted = "";
 
-  final encrypter = encrypt.Encrypted(encrypt.AES(keys));
+  // Implementação de criptografia
+  void encrypted() {
+    setState(() {
+      keys = encrypt.Key.fromUtf8('698dc19d489c4e4db73e28a713eab07b');
+      final iv = encrypt.IV.fromLength(16);
+
+      final encrypter = encrypt.Encrypter(encrypt.AES(keys));
+
+      final encrypted = encrypter.encrypt(labelText.text, iv: iv);
+      final ivBase64 = iv.base64;
+
+      textEncrypted = encrypted.base64;
+
+      dataCrypt = "$ivBase64:$textEncrypted";
+    });
+  }
+
+  //Implementação de descriptografia
+  void decrypt(String encrypData) {
+    final parts = encrypData.split(":");
+    final iv = encrypt.IV.fromBase64(parts[0]);
+    final encrypted = encrypt.Encrypted.fromBase64(parts[1]);
+
+    final encrypter = encrypt.Encrypter(encrypt.AES(keys));
+    setState(() {
+      decrypted =
+          "Texto descriptografado: ${encrypter.decrypt(encrypted, iv: iv)}";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +76,33 @@ class MyHomePage extends StatelessWidget {
               width: 280,
               padding: const EdgeInsets.only(top: 30),
               child: TextField(
+                controller: labelText,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Texto a ser Criptografado"),
               ),
             ),
           ),
-          Center(
-            child: Text(""),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Center(
+              child: Text(
+                textEncrypted,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Center(
+              child: Text(
+                decrypted,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
           SizedBox(height: 100),
           Row(
@@ -56,14 +111,14 @@ class MyHomePage extends StatelessWidget {
               SizedBox(
                 width: 160,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: encrypted,
                   child: Text("Criptografar"),
                 ),
               ),
               SizedBox(
                 width: 160,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => decrypt(dataCrypt),
                   child: Text("Descriptografar"),
                 ),
               ),
