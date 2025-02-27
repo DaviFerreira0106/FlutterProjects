@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shop/pages/page_provider_example.dart';
 import 'package:shop/pages/product_overview_page.dart';
 import 'package:shop/utils/app_routes.dart';
 import 'package:shop/pages/product_detail_page.dart';
-import 'package:shop/providers/counter_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/models/product_list.dart';
 
 void main() => runApp(ShopApp());
 
@@ -12,8 +12,9 @@ class ShopApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CounterProvider(
+    return ChangeNotifierProvider(
       // Instância da classe de monitoramento na raiz da aplicação
+      create: (context) => ProductList(),// Monitoro a classe com notifylistener
       child: MaterialApp(
         theme: ThemeData(
           appBarTheme: AppBarTheme(
@@ -29,7 +30,7 @@ class ShopApp extends StatelessWidget {
         ),
         home: ProductOverviewPage(),
         routes: {
-          AppRoutes.productDetail: (context) => PageProviderExample(),
+          AppRoutes.productDetail: (context) => ProductDetailPage(),
         },
       ),
     );

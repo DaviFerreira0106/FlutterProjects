@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/providers/counter_provider.dart';
+import 'package:shop/observer/counter_provider.dart';
 
 class PageProviderExample extends StatefulWidget {
   const PageProviderExample({super.key});
