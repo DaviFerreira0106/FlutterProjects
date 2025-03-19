@@ -4,6 +4,7 @@ import 'package:shop/utils/app_routes.dart';
 import 'package:shop/pages/product_detail_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/product_list.dart';
+import 'package:shop/models/cart.dart';
 
 void main() => runApp(ShopApp());
 
@@ -12,9 +13,17 @@ class ShopApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      // Instância da classe de monitoramento na raiz da aplicação
-      create: (context) => ProductList(),// Monitoro a classe com notifylistener
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          // Instância da classe de monitoramento na raiz da aplicação
+          create: (context) =>
+              ProductList(), // Monitoro a classe com notifylistener
+        ),
+        ChangeNotifierProvider(
+          create: (context) => Cart(),
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           appBarTheme: AppBarTheme(
