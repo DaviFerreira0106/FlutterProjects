@@ -19,7 +19,12 @@ class CartPage extends StatelessWidget {
       body: Column(
         children: [
           Card(
-            margin: const EdgeInsets.all(10),
+            margin: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+              top: 10,
+              bottom: 20,
+            ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -34,7 +39,7 @@ class CartPage extends StatelessWidget {
                   SizedBox(width: 10),
                   Chip(
                     label: Text(
-                      "R\$${cart.totalAmount}",
+                      "R\$${cart.totalAmount.toStringAsFixed(2)}",
                       style: TextStyle(
                         color: Theme.of(context)
                             .primaryTextTheme
@@ -66,7 +71,7 @@ class CartPage extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 4,
+              itemCount: cartItems.length,
               itemBuilder: (context, index) => CartItemWidget(
                 cartItem: cartItems.elementAt(index),
               ),
