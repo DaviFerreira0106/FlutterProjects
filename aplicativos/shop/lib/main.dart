@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:shop/models/product_list.dart';
 import 'package:shop/models/cart.dart';
 import 'package:shop/pages/cart_page.dart';
+import 'package:shop/models/order_list.dart';
+import 'package:shop/pages/order_page.dart';
 
 void main() => runApp(ShopApp());
 
@@ -24,6 +26,9 @@ class ShopApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => Cart(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => OrderList(),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -38,10 +43,11 @@ class ShopApp extends StatelessWidget {
             secondary: Colors.red,
           ),
         ),
-        home: ProductOverviewPage(),
         routes: {
+          AppRoutes.home: (context) => ProductOverviewPage(),
           AppRoutes.productDetail: (context) => ProductDetailPage(),
           AppRoutes.cart: (context) => CartPage(),
+          AppRoutes.order: (context) => OrderPage(),
         },
       ),
     );

@@ -4,6 +4,7 @@ import 'package:shop/components/product_grid.dart';
 import 'package:shop/components/badge_cart.dart';
 import 'package:shop/models/cart.dart';
 import 'package:shop/utils/app_routes.dart';
+import 'package:shop/components/app_drawer.dart';
 
 enum FilterOptions {
   favorite,
@@ -25,28 +26,28 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Minha Loja"),
-        leading: PopupMenuButton(
-          itemBuilder: (context) => [
-            PopupMenuItem(
-              value: FilterOptions.favorite,
-              child: Text("Somente Favoritos"),
-            ),
-            PopupMenuItem(
-              value: FilterOptions.all,
-              child: Text("Todos"),
-            ),
-          ],
-          onSelected: (FilterOptions value) {
-            setState(() {
-              if (value == FilterOptions.favorite) {
-                _showFavoriteOnly = true;
-              } else {
-                _showFavoriteOnly = false;
-              }
-            });
-          },
-        ),
         actions: [
+          PopupMenuButton(
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: FilterOptions.favorite,
+                child: Text("Somente Favoritos"),
+              ),
+              PopupMenuItem(
+                value: FilterOptions.all,
+                child: Text("Todos"),
+              ),
+            ],
+            onSelected: (FilterOptions value) {
+              setState(() {
+                if (value == FilterOptions.favorite) {
+                  _showFavoriteOnly = true;
+                } else {
+                  _showFavoriteOnly = false;
+                }
+              });
+            },
+          ),
           Consumer<Cart>(
             child: IconButton(
               onPressed: () => Navigator.of(context).pushNamed(AppRoutes.cart),
@@ -64,6 +65,7 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
       body: ProductGrid(
         showFavoriteOnly: _showFavoriteOnly,
       ),
+      drawer: AppDrawer(),
     );
   }
 }
