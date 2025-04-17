@@ -8,6 +8,7 @@ import 'package:shop/models/cart.dart';
 import 'package:shop/pages/cart_page.dart';
 import 'package:shop/models/order_list.dart';
 import 'package:shop/pages/order_page.dart';
+import 'package:shop/pages/product_page.dart';
 
 void main() => runApp(ShopApp());
 
@@ -48,6 +49,7 @@ class ShopApp extends StatelessWidget {
           AppRoutes.productDetail: (context) => ProductDetailPage(),
           AppRoutes.cart: (context) => CartPage(),
           AppRoutes.order: (context) => OrderPage(),
+          AppRoutes.products: (context) => ProductPage(),
         },
       ),
     );
