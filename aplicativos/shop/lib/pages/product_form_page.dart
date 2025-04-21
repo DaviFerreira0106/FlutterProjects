@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shop/models/product.dart';
-import 'dart:math';
+import 'package:provider/provider.dart';
+import 'package:shop/models/product_list.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -45,18 +45,28 @@ class ProductFormPageState extends State<ProductFormPage> {
     setState(() {});
   }
 
+  bool validateImage(String url) {
+    final bool isValidUrl = Uri.tryParse(url)?.hasAbsolutePath ?? false;
+    final bool isValidEndsWith = url.toLowerCase().endsWith('.png') ||
+        url.toLowerCase().endsWith('.jpeg') ||
+        url.toLowerCase().endsWith('.jpg');
+
+    return isValidUrl && isValidEndsWith;
+  }
+
   void submitForm() {
-    _formKey.currentState?.validate();
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    if (!isValid) {
+      return;
+    }
 
     _formKey.currentState?.save();
 
-    final Product newProduct = Product(
-      id: Random().nextDouble().toString(),
-      title: _formData['name'] as String,
-      description: _formData['description'] as String,
-      price: _formData['price'] as double,
-      imageUrl: _formData['imageUrl'] as String,
-    );
+    Provider.of<ProductList>(context, listen: false)
+        .addProductFromData(data: _formData);
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -99,37 +109,66 @@ class ProductFormPageState extends State<ProductFormPage> {
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: "Preço"),
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                focusNode: _priceFocus,
-                onFieldSubmitted: (_) =>
-                    FocusScope.of(context).requestFocus(_descriptionFocus),
-                onSaved: (price) =>
-                    _formData['price'] = double.parse(price ?? '0'),
-              ),
+                  decoration: InputDecoration(labelText: "Preço"),
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  focusNode: _priceFocus,
+                  onFieldSubmitted: (_) =>
+                      FocusScope.of(context).requestFocus(_descriptionFocus),
+                  onSaved: (price) =>
+                      _formData['price'] = double.parse(price ?? '0'),
+                  validator: (valuePrice) {
+                    final String priceString = valuePrice ?? '';
+                    final double price = double.tryParse(priceString) ?? -1;
+
+                    if (price <= 0) {
+                      return "Digite um valor válido!";
+                    }
+
+                    return null;
+                  }),
               TextFormField(
-                decoration: InputDecoration(labelText: "Descrição"),
-                focusNode: _descriptionFocus,
-                keyboardType: TextInputType.multiline,
-                maxLines: 3,
-                onSaved: (description) =>
-                    _formData['description'] = description ?? '',
-              ),
+                  decoration: InputDecoration(labelText: "Descrição"),
+                  focusNode: _descriptionFocus,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 3,
+                  onSaved: (description) =>
+                      _formData['description'] = description ?? '',
+                  validator: (descriptionValue) {
+                    final String description = descriptionValue ?? '';
+
+                    if (description.trim().isEmpty) {
+                      return "A descrição não pode ser vazia!";
+                    }
+
+                    if (description.trim().length < 10) {
+                      return "A descrição precisa ter no mínimo 10 letras!";
+                    }
+
+                    return null;
+                  }),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Expanded(
                     child: TextFormField(
-                      decoration: InputDecoration(labelText: "Url da Imagem"),
-                      focusNode: _imageUrlFocus,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.url,
-                      controller: _imageUrlController,
-                      onFieldSubmitted: (_) => submitForm(),
-                      onSaved: (imageUrl) =>
-                          _formData['imageUrl'] = imageUrl ?? '',
-                    ),
+                        decoration: InputDecoration(labelText: "Url da Imagem"),
+                        focusNode: _imageUrlFocus,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.url,
+                        controller: _imageUrlController,
+                        onFieldSubmitted: (_) => submitForm(),
+                        onSaved: (imageUrl) =>
+                            _formData['imageUrl'] = imageUrl ?? '',
+                        validator: (imageUrlValue) {
+                          final String imageUrl = imageUrlValue ?? '';
+
+                          if (!validateImage(imageUrl)) {
+                            return "Digite uma url válida!";
+                          }
+
+                          return null;
+                        }),
                   ),
                   Container(
                     width: 100,
