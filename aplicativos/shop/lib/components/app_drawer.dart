@@ -12,21 +12,24 @@ class AppDrawer extends StatelessWidget {
           AppBar(
             title: Text("Bem vindo Usuário!"),
           ),
-          Divider(),
           ListTile(
             leading: Icon(Icons.shop),
             title: Text("Página Inicial"),
             onTap: () =>
                 Navigator.of(context).pushReplacementNamed(AppRoutes.home),
           ),
-          Divider(),
+          Divider(
+            color: Colors.grey,
+          ),
           ListTile(
             leading: Icon(Icons.payment),
             title: Text("Pedidos"),
             onTap: () =>
                 Navigator.of(context).pushReplacementNamed(AppRoutes.order),
           ),
-          Divider(),
+          Divider(
+            color: Colors.grey,
+          ),
           ListTile(
             leading: Icon(Icons.edit),
             title: Text("Gerenciar Produtos"),

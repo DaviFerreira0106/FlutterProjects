@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/product_list.dart';
+import 'package:shop/models/product.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -41,6 +42,23 @@ class ProductFormPageState extends State<ProductFormPage> {
     _imageUrlFocus.dispose();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final args = ModalRoute.of(context)?.settings.arguments;
+
+    if (args != null) {
+      final Product prod = args as Product;
+      _formData['id'] = prod.id;
+      _formData['price'] = prod.price;
+      _formData['description'] = prod.description;
+      _formData['imageUrl'] = prod.imageUrl;
+      _formData['name'] = prod.title;
+      _imageUrlController.text = prod.imageUrl;
+    }
+  }
+
   void updateImageUrl() {
     setState(() {});
   }
@@ -64,7 +82,7 @@ class ProductFormPageState extends State<ProductFormPage> {
     _formKey.currentState?.save();
 
     Provider.of<ProductList>(context, listen: false)
-        .addProductFromData(data: _formData);
+        .saveProduct(data: _formData);
 
     Navigator.of(context).pop();
   }
@@ -88,6 +106,7 @@ class ProductFormPageState extends State<ProductFormPage> {
           child: ListView(
             children: [
               TextFormField(
+                initialValue: _formData['name'].toString(),
                 decoration: InputDecoration(labelText: "Nome"),
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.next,
@@ -109,6 +128,7 @@ class ProductFormPageState extends State<ProductFormPage> {
                 },
               ),
               TextFormField(
+                  initialValue: _formData['price'].toString(),
                   decoration: InputDecoration(labelText: "Preço"),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -128,6 +148,7 @@ class ProductFormPageState extends State<ProductFormPage> {
                     return null;
                   }),
               TextFormField(
+                  initialValue: _formData['description'].toString(),
                   decoration: InputDecoration(labelText: "Descrição"),
                   focusNode: _descriptionFocus,
                   keyboardType: TextInputType.multiline,
