@@ -106,7 +106,7 @@ class ProductFormPageState extends State<ProductFormPage> {
           child: ListView(
             children: [
               TextFormField(
-                initialValue: _formData['name'].toString(),
+                initialValue: _formData['name']?.toString(),
                 decoration: InputDecoration(labelText: "Nome"),
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.next,
@@ -128,7 +128,7 @@ class ProductFormPageState extends State<ProductFormPage> {
                 },
               ),
               TextFormField(
-                  initialValue: _formData['price'].toString(),
+                  initialValue: _formData['price']?.toString(),
                   decoration: InputDecoration(labelText: "Preço"),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -148,7 +148,7 @@ class ProductFormPageState extends State<ProductFormPage> {
                     return null;
                   }),
               TextFormField(
-                  initialValue: _formData['description'].toString(),
+                  initialValue: _formData['description']?.toString(),
                   decoration: InputDecoration(labelText: "Descrição"),
                   focusNode: _descriptionFocus,
                   keyboardType: TextInputType.multiline,
