@@ -75,7 +75,7 @@ class ProductFormPageState extends State<ProductFormPage> {
     return isValidUrl && isValidEndsWith;
   }
 
-  void submitForm() {
+  Future<void> submitForm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) {
@@ -86,11 +86,15 @@ class ProductFormPageState extends State<ProductFormPage> {
 
     setState(() => _progressIndicator = true);
 
-    Provider.of<ProductList>(
-      context,
-      listen: false,
-    ).saveProduct(data: _formData).catchError((error) {
-      return showDialog(
+    try {
+      await Provider.of<ProductList>(
+        context,
+        listen: false,
+      ).saveProduct(data: _formData);
+
+      Navigator.of(context).pop();
+    } catch (error) {
+      await showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: Text("Ocorreu um Erro!"),
@@ -103,10 +107,9 @@ class ProductFormPageState extends State<ProductFormPage> {
           ],
         ),
       );
-    }).then((value) {
+    } finally {
       setState(() => _progressIndicator = false);
-      Navigator.of(context).pop();
-    });
+    }
   }
 
   @override
