@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/data/dummy_data.dart';
 import 'dart:math';
+import 'package:http/http.dart' as http;
 
 class ProductList with ChangeNotifier {
   final List<Product> _items = dummyProducts;
+  final String _baseUrl = "https://shop-51472-default-rtdb.firebaseio.com";
 
   List<Product> get items => [..._items];
   List<Product> get favoriteItems =>
@@ -14,18 +18,43 @@ class ProductList with ChangeNotifier {
     return _items.length;
   }
 
-  void addProduct({required Product product}) {
-    _items.add(product);
-    notifyListeners(); // Notifico os meus interessados
+  Future<void> addProduct({required Product product}) {
+    final future = http.post(
+      Uri.parse("$_baseUrl/products.json"),
+      body: jsonEncode(
+        {
+          "name": product.title,
+          "description": product.description,
+          "price": product.price,
+          "imageUrl": product.imageUrl,
+          "isfavorite": product.isFavorite,
+        },
+      ),
+    );
+    return future.then((response) {
+      final String id = jsonDecode(response.body)["name"];
+      _items.add(
+        Product(
+          id: id,
+          title: product.title,
+          description: product.description,
+          price: product.price,
+          imageUrl: product.imageUrl,
+        ),
+      );
+      notifyListeners(); // Notifico os meus interessados
+    });
   }
 
-  void updateProduct({required Product product}) {
+  Future<void> updateProduct({required Product product}) {
     final int index = _items.indexWhere((prod) => prod.id == product.id);
 
     if (index >= 0) {
       _items[index] = product;
     }
     notifyListeners();
+
+    return Future.value();
   }
 
   void removeProduct({required Product product}) {
@@ -37,7 +66,7 @@ class ProductList with ChangeNotifier {
     notifyListeners();
   }
 
-  void saveProduct({required Map<String, Object> data}) {
+  Future<void> saveProduct({required Map<String, Object> data}) {
     final bool hasId = data['id'] != null;
 
     final Product product = Product(
@@ -49,9 +78,9 @@ class ProductList with ChangeNotifier {
     );
 
     if (hasId) {
-      updateProduct(product: product);
+      return updateProduct(product: product);
     } else {
-      addProduct(product: product);
+      return addProduct(product: product);
     }
   }
 }
