@@ -1,6 +1,10 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class Product with ChangeNotifier{
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shop/exceptions/http_exceptions.dart';
+
+class Product with ChangeNotifier {
   final String id;
   final String title;
   final String description;
@@ -17,8 +21,27 @@ class Product with ChangeNotifier{
     this.isFavorite = false,
   });
 
-  void toggleFavorite(){
+  Future<void> toggleFavorite(Product product) async {
+    final String _baseUrl =
+        "https://shop-51472-default-rtdb.firebaseio.com/products";
+
     isFavorite = !isFavorite;
     notifyListeners();
+
+    final response = await http.patch(Uri.parse("$_baseUrl/${product.id}.json"),
+        body: jsonEncode(
+          {
+            "isfavorite": product.isFavorite,
+          },
+        ));
+
+    if (response.statusCode >= 400) {
+      isFavorite = !isFavorite;
+      notifyListeners();
+      throw HttpExceptions(
+        message: "Erro ao atualizar favorito.",
+        statusCode: response.statusCode,
+      );
+    }
   }
 }
