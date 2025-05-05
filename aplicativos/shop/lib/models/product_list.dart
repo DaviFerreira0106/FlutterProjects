@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shop/models/product.dart';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'package:shop/exceptions/http_exceptions.dart';
 
 class ProductList with ChangeNotifier {
   final List<Product> _items = [];
@@ -87,13 +88,28 @@ class ProductList with ChangeNotifier {
     return Future.value();
   }
 
-  void removeProduct({required Product product}) {
+  Future<void> removeProduct({required Product product}) async {
     final int index = _items.indexWhere((prod) => prod.id == product.id);
 
     if (index >= 0) {
-      _items.removeWhere((prod) => prod.id == product.id);
+      // Remoção Local primeiro!
+      final product = _items.elementAt(index);
+      _items.remove(product);
+      notifyListeners();
+
+      final response = await http.delete(
+        Uri.parse("$_baseUrl/${product.id}.json"),
+      );
+
+      if (response.statusCode >= 400) {
+        _items.insert(index, product);
+        notifyListeners();
+        throw HttpExceptions(
+          message: "Não foi possível remover o produto.",
+          statusCode: response.statusCode,
+        );
+      }
     }
-    notifyListeners();
   }
 
   Future<void> saveProduct({required Map<String, Object> data}) {
