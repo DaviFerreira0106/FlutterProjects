@@ -57,22 +57,7 @@ class CartPage extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  TextButton(
-                    onPressed: () {
-                      Provider.of<OrderList>(
-                        context,
-                        listen: false,
-                      ).addOrder(cart);
-
-                      cart.clear();
-                    },
-                    child: Text(
-                      "COMPRAR",
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
+                  TextButtonBuy(cart: cart),
                 ],
               ),
             ),
@@ -88,5 +73,45 @@ class CartPage extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class TextButtonBuy extends StatefulWidget {
+  final Cart cart;
+
+  const TextButtonBuy({super.key, required this.cart});
+
+  @override
+  TextButtonBuyState createState() {
+    return TextButtonBuyState();
+  }
+}
+
+class TextButtonBuyState extends State<TextButtonBuy> {
+  bool _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return _isLoading
+        ? CircularProgressIndicator()
+        : TextButton(
+            onPressed: widget.cart.itemsCartCount == 0
+                ? null
+                : () async {
+                    setState(() => _isLoading = true);
+                    await Provider.of<OrderList>(
+                      context,
+                      listen: false,
+                    ).addOrder(widget.cart);
+                    setState(() => _isLoading = false);
+                    widget.cart.clear();
+                  },
+            child: Text(
+              "COMPRAR",
+              style: TextStyle(
+                fontSize: 15,
+              ),
+            ),
+          );
   }
 }
