@@ -10,6 +10,7 @@ import 'package:shop/models/order_list.dart';
 import 'package:shop/pages/order_page.dart';
 import 'package:shop/pages/product_page.dart';
 import 'package:shop/pages/product_form_page.dart';
+import 'package:shop/pages/auth_page.dart';
 
 void main() => runApp(ShopApp());
 
@@ -46,6 +47,7 @@ class ShopApp extends StatelessWidget {
           ),
         ),
         routes: {
+          AppRoutes.auth: (context) => AuthPage(),
           AppRoutes.home: (context) => ProductOverviewPage(),
           AppRoutes.productDetail: (context) => ProductDetailPage(),
           AppRoutes.cart: (context) => CartPage(),
