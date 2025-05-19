@@ -11,6 +11,7 @@ import 'package:shop/pages/order_page.dart';
 import 'package:shop/pages/product_page.dart';
 import 'package:shop/pages/product_form_page.dart';
 import 'package:shop/pages/auth_page.dart';
+import 'package:shop/models/auth.dart';
 
 void main() => runApp(ShopApp());
 
@@ -32,6 +33,9 @@ class ShopApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => OrderList(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => Auth(),
+        )
       ],
       child: MaterialApp(
         theme: ThemeData(
