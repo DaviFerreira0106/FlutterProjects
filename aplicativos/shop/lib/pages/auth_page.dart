@@ -50,6 +50,7 @@ class AuthPage extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(height: 20),
               AuthForm(),
             ],
           ),

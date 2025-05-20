@@ -48,11 +48,16 @@ class AuthFormState extends State<AuthForm> {
 
     _formKey.currentState?.save();
 
+    final auth = Provider.of<Auth>(context, listen: false);
+
     if (_isLogin()) {
       //Login
+      auth.signIn(
+        email: _authForm['email']!,
+        password: _authForm['password']!,
+      );
     } else {
       // Cadastrar
-      final auth = Provider.of<Auth>(context, listen: false);
       await auth.signup(
         email: _authForm['email']!,
         password: _authForm['password']!,
@@ -70,9 +75,15 @@ class AuthFormState extends State<AuthForm> {
       height: _isLogin() ? 310 : 400,
       width: deviceSize.width * 0.75,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 6,
+              color: const Color.fromARGB(27, 0, 0, 0),
+              offset: Offset(8, 8),
+            ),
+          ]),
       padding: const EdgeInsets.all(10),
       child: Form(
         key: _formKey,
