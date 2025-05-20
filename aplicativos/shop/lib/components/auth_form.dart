@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop/models/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/exceptions/auth_exceptions.dart';
 
 enum AuthMode {
   signup,
@@ -37,6 +38,22 @@ class AuthFormState extends State<AuthForm> {
     });
   }
 
+  void _showDialogError({required String msg}) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Erro de Autenticação'),
+        content: Text(msg),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Fechar'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _submit() async {
     bool _isValid = _formKey.currentState?.validate() ?? false;
 
@@ -50,18 +67,24 @@ class AuthFormState extends State<AuthForm> {
 
     final auth = Provider.of<Auth>(context, listen: false);
 
-    if (_isLogin()) {
-      //Login
-      auth.signIn(
-        email: _authForm['email']!,
-        password: _authForm['password']!,
-      );
-    } else {
-      // Cadastrar
-      await auth.signup(
-        email: _authForm['email']!,
-        password: _authForm['password']!,
-      );
+    try {
+      if (_isLogin()) {
+        //Login
+        await auth.signIn(
+          email: _authForm['email']!,
+          password: _authForm['password']!,
+        );
+      } else {
+        // Cadastrar
+        await auth.signup(
+          email: _authForm['email']!,
+          password: _authForm['password']!,
+        );
+      }
+    } on AuthExceptions catch (error) {
+      _showDialogError(msg: error.toString());
+    } catch (error) {
+      _showDialogError(msg: 'Ocorreu um erro de autenticação.');
     }
 
     setState(() => _isLoading = false);

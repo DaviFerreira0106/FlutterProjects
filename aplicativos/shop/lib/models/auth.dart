@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shop/exceptions/auth_exceptions.dart';
 
 class Auth with ChangeNotifier {
-//https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]
-
   Future<void> _authenticate({
     required String email,
     required String password,
@@ -23,23 +22,29 @@ class Auth with ChangeNotifier {
     );
 
     print(response.body);
+
+    final body = jsonDecode(response.body);
+
+    if (body['error'] != null) {
+      throw AuthExceptions(key: body['error']['message']);
+    }
+
+    print(response.body);
   }
 
   Future<void> signup({
     required String email,
     required String password,
   }) async {
-    _authenticate(email: email, password: password, urlFragment: 'signUp');
+    return _authenticate(
+        email: email, password: password, urlFragment: 'signUp');
   }
 
   Future<void> signIn({
     required String email,
     required String password,
   }) async {
-    _authenticate(
-      email: email,
-      password: password,
-      urlFragment: 'signInWithPassword',
-    );
+    return _authenticate(
+        email: email, password: password, urlFragment: 'signInWithPassword');
   }
 }
