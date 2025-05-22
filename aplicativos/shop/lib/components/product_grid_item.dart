@@ -4,6 +4,7 @@ import 'package:shop/models/product.dart';
 import 'package:shop/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/cart.dart';
+import 'package:shop/models/auth.dart';
 
 class ProductGridItem extends StatelessWidget {
   const ProductGridItem({super.key});
@@ -13,6 +14,7 @@ class ProductGridItem extends StatelessWidget {
     final Product product = Provider.of<Product>(context, listen: false);
     final Cart cart = Provider.of<Cart>(context);
     final ScaffoldMessengerState snackBar = ScaffoldMessenger.of(context);
+    final auth = Provider.of<Auth>(context, listen: false);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -23,7 +25,10 @@ class ProductGridItem extends StatelessWidget {
             builder: (context, product, _) => IconButton(
               onPressed: () async {
                 try {
-                  await product.toggleFavorite(product);
+                  await product.toggleFavorite(
+                    product: product,
+                    token: auth.token ?? '',
+                  );
                 } on HttpExceptions catch (error) {
                   snackBar.showSnackBar(
                     SnackBar(

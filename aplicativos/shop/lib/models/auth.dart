@@ -42,7 +42,6 @@ class Auth with ChangeNotifier {
         'returnSecureToken': true,
       }),
     );
-    print(response.body);
     final body = jsonDecode(response.body);
 
     if (body['error'] != null) {

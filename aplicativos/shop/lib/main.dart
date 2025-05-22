@@ -22,19 +22,27 @@ class ShopApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (context) => Auth(),
+        ),
+        ChangeNotifierProxyProvider<Auth, ProductList>(
           // Instância da classe de monitoramento na raiz da aplicação
           create: (context) =>
-              ProductList(), // Monitoro a classe com notifylistener
+              ProductList('', []), // Monitoro a classe com notifylistener
+          update: (context, auth, previous) => ProductList(
+            auth.token ?? '',
+            previous?.items ?? [],
+          ),
+        ),
+        ChangeNotifierProxyProvider<Auth, OrderList>(
+          create: (context) => OrderList('', []),
+          update: (context, auth, previous) => OrderList(
+            auth.token ?? '',
+            previous?.listCart ?? [],
+          ),
         ),
         ChangeNotifierProvider(
           create: (context) => Cart(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => OrderList(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => Auth(),
-        )
       ],
       child: MaterialApp(
         theme: ThemeData(
