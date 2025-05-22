@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shop/pages/product_overview_page.dart';
 import 'package:shop/utils/app_routes.dart';
 import 'package:shop/pages/product_detail_page.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +9,7 @@ import 'package:shop/models/order_list.dart';
 import 'package:shop/pages/order_page.dart';
 import 'package:shop/pages/product_page.dart';
 import 'package:shop/pages/product_form_page.dart';
-import 'package:shop/pages/auth_page.dart';
+import 'package:shop/pages/auth_or_home_page.dart';
 import 'package:shop/models/auth.dart';
 
 void main() => runApp(ShopApp());
@@ -51,8 +50,7 @@ class ShopApp extends StatelessWidget {
           ),
         ),
         routes: {
-          AppRoutes.auth: (context) => AuthPage(),
-          AppRoutes.home: (context) => ProductOverviewPage(),
+          AppRoutes.authOrHomePage: (context) => AuthOrHomePage(),
           AppRoutes.productDetail: (context) => ProductDetailPage(),
           AppRoutes.cart: (context) => CartPage(),
           AppRoutes.order: (context) => OrderPage(),

@@ -19,7 +19,7 @@ class AuthForm extends StatefulWidget {
 
 class AuthFormState extends State<AuthForm> {
   final TextEditingController _passwordController = TextEditingController();
-  AuthMode _authMode = AuthMode.signup;
+  AuthMode _authMode = AuthMode.login;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 

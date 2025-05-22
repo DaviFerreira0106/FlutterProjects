@@ -15,8 +15,8 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.shop),
             title: Text("Página Inicial"),
-            onTap: () =>
-                Navigator.of(context).pushReplacementNamed(AppRoutes.home),
+            onTap: () => Navigator.of(context)
+                .pushReplacementNamed(AppRoutes.authOrHomePage),
           ),
           Divider(
             color: Colors.grey,
