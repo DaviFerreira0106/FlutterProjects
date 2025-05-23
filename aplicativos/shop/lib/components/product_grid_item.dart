@@ -28,6 +28,7 @@ class ProductGridItem extends StatelessWidget {
                   await product.toggleFavorite(
                     product: product,
                     token: auth.token ?? '',
+                    uid: auth.uid ?? '',
                   );
                 } on HttpExceptions catch (error) {
                   snackBar.showSnackBar(

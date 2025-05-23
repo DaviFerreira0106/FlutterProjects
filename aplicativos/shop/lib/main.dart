@@ -27,9 +27,10 @@ class ShopApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, ProductList>(
           // Instância da classe de monitoramento na raiz da aplicação
           create: (context) =>
-              ProductList('', []), // Monitoro a classe com notifylistener
+              ProductList(), // Monitoro a classe com notifylistener
           update: (context, auth, previous) => ProductList(
             auth.token ?? '',
+            auth.uid ?? '',
             previous?.items ?? [],
           ),
         ),
