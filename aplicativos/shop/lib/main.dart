@@ -35,9 +35,10 @@ class ShopApp extends StatelessWidget {
           ),
         ),
         ChangeNotifierProxyProvider<Auth, OrderList>(
-          create: (context) => OrderList('', []),
+          create: (context) => OrderList(),
           update: (context, auth, previous) => OrderList(
             auth.token ?? '',
+            auth.uid ?? '',
             previous?.listCart ?? [],
           ),
         ),
