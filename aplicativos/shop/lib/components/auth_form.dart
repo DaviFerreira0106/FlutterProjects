@@ -17,23 +17,54 @@ class AuthForm extends StatefulWidget {
   }
 }
 
-class AuthFormState extends State<AuthForm> {
+class AuthFormState extends State<AuthForm>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _passwordController = TextEditingController();
   AuthMode _authMode = AuthMode.login;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-
+  // AnimationController? _controller;
+  // Animation<Size>? _heightAnimation;
   Map<String, String> _authForm = {};
 
   bool _isLogin() => _authMode == AuthMode.login;
   bool _isSignup() => _authMode == AuthMode.signup;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _controller = AnimationController(
+  //     vsync: this,
+  //     duration: Duration(
+  //       milliseconds: 300,
+  //     ),
+  //   );
+
+  //   _heightAnimation = Tween(
+  //     begin: Size(double.infinity, 310),
+  //     end: Size(double.infinity, 400),
+  //   ).animate(
+  //     CurvedAnimation(
+  //       parent: _controller!,
+  //       curve: Curves.linear,
+  //     ),
+  //   );
+  // }
+
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   _controller?.dispose();
+  // }
+
   void _switchMode() {
     setState(() {
       if (_isLogin()) {
         _authMode = AuthMode.signup;
+        // _controller?.forward();
       } else {
         _authMode = AuthMode.login;
+        // _controller?.reverse();
       }
     });
   }
@@ -94,7 +125,9 @@ class AuthFormState extends State<AuthForm> {
   Widget build(BuildContext context) {
     final Size deviceSize = MediaQuery.of(context).size;
 
-    return Container(
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeIn,
       height: _isLogin() ? 310 : 400,
       width: deviceSize.width * 0.75,
       decoration: BoxDecoration(
