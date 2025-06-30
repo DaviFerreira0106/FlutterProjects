@@ -23,48 +23,59 @@ class AuthFormState extends State<AuthForm>
   AuthMode _authMode = AuthMode.login;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-  // AnimationController? _controller;
-  // Animation<Size>? _heightAnimation;
+  AnimationController? _controller;
+  Animation<double>? _opacityAnimation;
+  Animation<Offset>? _slideAnimation;
   Map<String, String> _authForm = {};
 
   bool _isLogin() => _authMode == AuthMode.login;
-  bool _isSignup() => _authMode == AuthMode.signup;
+  // bool _isSignup() => _authMode == AuthMode.signup;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _controller = AnimationController(
-  //     vsync: this,
-  //     duration: Duration(
-  //       milliseconds: 300,
-  //     ),
-  //   );
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(
+        milliseconds: 300,
+      ),
+    );
 
-  //   _heightAnimation = Tween(
-  //     begin: Size(double.infinity, 310),
-  //     end: Size(double.infinity, 400),
-  //   ).animate(
-  //     CurvedAnimation(
-  //       parent: _controller!,
-  //       curve: Curves.linear,
-  //     ),
-  //   );
-  // }
+    _opacityAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller!,
+        curve: Curves.linear,
+      ),
+    );
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _controller?.dispose();
-  // }
+    _slideAnimation = Tween<Offset>(
+      begin: Offset(0, -1.5),
+      end: Offset(0, 0),
+    ).animate(
+      CurvedAnimation(
+        parent: _controller!,
+        curve: Curves.linear,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller?.dispose();
+  }
 
   void _switchMode() {
     setState(() {
       if (_isLogin()) {
         _authMode = AuthMode.signup;
-        // _controller?.forward();
+        _controller?.forward();
       } else {
         _authMode = AuthMode.login;
-        // _controller?.reverse();
+        _controller?.reverse();
       }
     });
   }
@@ -173,18 +184,33 @@ class AuthFormState extends State<AuthForm>
                 return null;
               },
             ),
-            if (_isSignup())
-              TextFormField(
-                decoration: InputDecoration(labelText: "Confirmar Senha"),
-                obscureText: true,
-                validator: (_password) {
-                  final String password = _password ?? "";
-
-                  if (password != _passwordController.text) {
-                    return "Senhas digitadas estão divergente!";
-                  }
-                },
+            AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              curve: Curves.linear,
+              constraints: BoxConstraints(
+                minHeight: _isLogin() ? 0 : 60,
+                maxHeight: _isLogin() ? 0 : 120,
               ),
+              child: SlideTransition(
+                position: _slideAnimation!,
+                child: FadeTransition(
+                  opacity: _opacityAnimation!,
+                  child: TextFormField(
+                    decoration: InputDecoration(labelText: "Confirmar Senha"),
+                    obscureText: true,
+                    validator: (_password) {
+                      final String password = _password ?? "";
+
+                      if (password != _passwordController.text) {
+                        return "Senhas digitadas estão divergente!";
+                      }
+
+                      return null;
+                    },
+                  ),
+                ),
+              ),
+            ),
             SizedBox(height: 30),
             _isLoading
                 ? CircularProgressIndicator()
