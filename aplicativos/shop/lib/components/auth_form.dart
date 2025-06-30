@@ -198,15 +198,17 @@ class AuthFormState extends State<AuthForm>
                   child: TextFormField(
                     decoration: InputDecoration(labelText: "Confirmar Senha"),
                     obscureText: true,
-                    validator: (_password) {
-                      final String password = _password ?? "";
+                    validator: _isLogin()
+                        ? null
+                        : (_password) {
+                            final String password = _password ?? "";
 
-                      if (password != _passwordController.text) {
-                        return "Senhas digitadas estão divergente!";
-                      }
+                            if (password != _passwordController.text) {
+                              return "Senhas digitadas estão divergente!";
+                            }
 
-                      return null;
-                    },
+                            return null;
+                          },
                   ),
                 ),
               ),
