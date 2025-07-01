@@ -13,8 +13,9 @@ class GreatPlacesApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          primary: Colors.amber,
+          primary: Colors.indigo,
           seedColor: Colors.indigo,
+          secondary: Colors.amber,
         ),
       ),
       home: PlacesListPage(),
