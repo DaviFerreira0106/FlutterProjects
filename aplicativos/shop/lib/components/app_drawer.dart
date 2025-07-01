@@ -28,6 +28,11 @@ class AppDrawer extends StatelessWidget {
             title: Text("Pedidos"),
             onTap: () =>
                 Navigator.of(context).pushReplacementNamed(AppRoutes.order),
+            //       Navigator.of(context).pushReplacement(
+            //     CustomRoutes(
+            //       build: (context) => OrderPage(),
+            //     ),
+            //   ),
           ),
           Divider(
             color: Colors.grey,

@@ -11,6 +11,7 @@ import 'package:shop/pages/product_page.dart';
 import 'package:shop/pages/product_form_page.dart';
 import 'package:shop/pages/auth_or_home_page.dart';
 import 'package:shop/models/auth.dart';
+import 'package:shop/utils/custom_routes_global.dart';
 
 void main() => runApp(ShopApp());
 
@@ -57,6 +58,12 @@ class ShopApp extends StatelessWidget {
           colorScheme: ColorScheme.light(
             primary: Colors.blueGrey,
             secondary: Colors.red,
+          ),
+          pageTransitionsTheme: PageTransitionsTheme(
+            builders: {
+              TargetPlatform.iOS: CustomRoutesGlobal(),
+              TargetPlatform.android: CustomRoutesGlobal(),
+            },
           ),
         ),
         routes: {
