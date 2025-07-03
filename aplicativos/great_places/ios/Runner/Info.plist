@@ -28,6 +28,16 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Precisamos acessar sua localização</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Precisamos ter acesso a sua localização</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Precisamos acessar sua biblioteca</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Precisamos acessar sua camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Precisamos acessar seu microfone</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
