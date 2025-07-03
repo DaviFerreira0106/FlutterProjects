@@ -20,26 +20,35 @@ class PlacesListPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Consumer<GreatPlaces>(
-        builder: (context, greatPlaces, child) => greatPlaces.itemCount == 0
-            ? child!
-            : ListView.builder(
-                itemCount: greatPlaces.itemCount,
-                itemBuilder: (context, index) => ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: FileImage(
-                      greatPlaces.itemByIndex(index).image,
+      body: FutureBuilder(
+        future: Provider.of<GreatPlaces>(context, listen: false).loadPlaces(),
+        builder: (context, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Consumer<GreatPlaces>(
+                    builder: (context, greatPlaces, child) =>
+                        greatPlaces.itemCount == 0
+                            ? child!
+                            : ListView.builder(
+                                itemCount: greatPlaces.itemCount,
+                                itemBuilder: (context, index) => ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundImage: FileImage(
+                                      greatPlaces.itemByIndex(index).image,
+                                    ),
+                                  ),
+                                  title: Text(
+                                    greatPlaces.itemByIndex(index).title,
+                                  ),
+                                  onTap: () {},
+                                ),
+                              ),
+                    child: Center(
+                      child: Text('Nenhum local cadastrado'),
                     ),
                   ),
-                  title: Text(
-                    greatPlaces.itemByIndex(index).title,
-                  ),
-                  onTap: () {},
-                ),
-              ),
-        child: Center(
-          child: Text('Nenhum local cadastrado'),
-        ),
       ),
     );
   }

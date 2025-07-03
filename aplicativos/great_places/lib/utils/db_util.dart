@@ -24,4 +24,9 @@ class DbUtils {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+
+  static Future<List<Map<String, dynamic>>> getData(String table) async {
+    final sql.Database db = await DbUtils.dataBase();
+    return db.query(table);
+  }
 }
