@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:great_places/utils/location_util.dart';
+import 'package:great_places/page/map_page.dart';
 
 class LocationInput extends StatefulWidget {
   const LocationInput({super.key});
@@ -12,7 +13,7 @@ class LocationInput extends StatefulWidget {
 class LocationInputState extends State<LocationInput> {
   String? _locationImageUrl;
 
-  Future<void> getLocationCurrentUser() async {
+  Future<void> _getLocationCurrentUser() async {
     final LocationData locData = await Location().getLocation();
     final locationImagePreviewUrl = LocationUtil.generateLocationPreviewImage(
       longitude: locData.longitude!,
@@ -20,6 +21,17 @@ class LocationInputState extends State<LocationInput> {
     );
 
     setState(() => _locationImageUrl = locationImagePreviewUrl);
+  }
+
+  Future<void> _selectOnMap() async {
+    final selectedMap = await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => MapPage(),
+      ),
+    );
+
+    if (selectedMap == null) return;
   }
 
   @override
@@ -48,12 +60,12 @@ class LocationInputState extends State<LocationInput> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton.icon(
-              onPressed: getLocationCurrentUser,
+              onPressed: _getLocationCurrentUser,
               label: Text('Localização Atual'),
               icon: Icon(Icons.location_on),
             ),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: _selectOnMap,
               label: Text('Selecionar no Mapa'),
               icon: Icon(Icons.map),
             ),
