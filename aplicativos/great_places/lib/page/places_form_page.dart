@@ -66,6 +66,7 @@ class PlacesFormPageState extends State<PlacesFormPage> {
                         decoration: InputDecoration(
                           label: Text('Título'),
                         ),
+                        onChanged: (text) => setState(() {}),
                       ),
                       SizedBox(height: 10),
                       ImageInput(

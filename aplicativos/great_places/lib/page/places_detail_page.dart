@@ -43,6 +43,7 @@ class PlacesDetailPage extends StatelessWidget {
                   fullscreenDialog: true,
                   builder: (context) => MapPage(
                     isReadOnly: true,
+                    placesLocation: place.location,
                   ),
                 ),
               );
