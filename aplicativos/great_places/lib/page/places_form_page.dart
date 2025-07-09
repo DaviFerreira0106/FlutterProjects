@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:great_places/widgets/image_input.dart';
 import 'package:provider/provider.dart';
 import 'package:great_places/providers/great_places.dart';
@@ -16,17 +17,29 @@ class PlacesFormPage extends StatefulWidget {
 class PlacesFormPageState extends State<PlacesFormPage> {
   final TextEditingController _titleController = TextEditingController();
   File? _imagePicker;
+  LatLng? _pickedPosition;
+
+  void _selectPosition(LatLng position) {
+    setState(() => _pickedPosition = position);
+  }
 
   void _selectImage(File picker) {
-    _imagePicker = picker;
+    setState(() => _imagePicker = picker);
+  }
+
+  bool _isValid() {
+    return _titleController.text.isNotEmpty &&
+        _imagePicker != null &&
+        _pickedPosition != null;
   }
 
   void _submitForm() {
-    if (_titleController.text.isEmpty || _imagePicker == null) return;
+    if (!_isValid()) return;
 
     Provider.of<GreatPlaces>(context, listen: false).addPlaces(
       _titleController.text,
       _imagePicker!,
+      _pickedPosition!,
     );
 
     Navigator.of(context).pop();
@@ -59,14 +72,16 @@ class PlacesFormPageState extends State<PlacesFormPage> {
                         onSelectImage: _selectImage,
                       ),
                       SizedBox(height: 10),
-                      LocationInput(),
+                      LocationInput(
+                        selectPosition: _selectPosition,
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
             ElevatedButton.icon(
-              onPressed: _submitForm,
+              onPressed: !_isValid() ? null : _submitForm,
               label: Text(
                 'Adicionar',
                 style: TextStyle(
@@ -77,11 +92,17 @@ class PlacesFormPageState extends State<PlacesFormPage> {
                 Icons.add,
                 color: Colors.white,
               ),
-              style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  Theme.of(context).colorScheme.secondary,
-                ),
-              ),
+              style: !_isValid()
+                  ? ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                        Colors.grey,
+                      ),
+                    )
+                  : ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                        Theme.of(context).colorScheme.secondary,
+                      ),
+                    ),
             ),
           ],
         ),

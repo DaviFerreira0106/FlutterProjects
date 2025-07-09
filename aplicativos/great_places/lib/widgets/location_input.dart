@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:great_places/utils/location_util.dart';
 import 'package:great_places/page/map_page.dart';
 
 class LocationInput extends StatefulWidget {
-  const LocationInput({super.key});
+  final Function selectPosition;
+
+  const LocationInput({super.key, required this.selectPosition});
 
   @override
   LocationInputState createState() => LocationInputState();
@@ -13,25 +16,38 @@ class LocationInput extends StatefulWidget {
 class LocationInputState extends State<LocationInput> {
   String? _locationImageUrl;
 
-  Future<void> _getLocationCurrentUser() async {
-    final LocationData locData = await Location().getLocation();
+  void previewImage({required double latitude, required double longitude}) {
     final locationImagePreviewUrl = LocationUtil.generateLocationPreviewImage(
-      longitude: locData.longitude!,
-      latitude: locData.latitude!,
+      longitude: longitude,
+      latitude: latitude,
     );
 
     setState(() => _locationImageUrl = locationImagePreviewUrl);
   }
 
+  Future<void> _getLocationCurrentUser() async {
+    final locData = await Location().getLocation();
+    previewImage(latitude: locData.latitude!, longitude: locData.longitude!);
+
+    widget.selectPosition(LatLng(locData.latitude!, locData.longitude!));
+  }
+
   Future<void> _selectOnMap() async {
-    final selectedMap = await Navigator.of(context).push(
+    final LatLng? selectedPositionMap = await Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (context) => MapPage(),
       ),
     );
 
-    if (selectedMap == null) return;
+    if (selectedPositionMap == null) return;
+
+    previewImage(
+      latitude: selectedPositionMap.latitude,
+      longitude: selectedPositionMap.longitude,
+    );
+
+    widget.selectPosition(selectedPositionMap);
   }
 
   @override
