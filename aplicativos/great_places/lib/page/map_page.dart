@@ -4,15 +4,15 @@ import 'package:great_places/models/place.dart';
 
 class MapPage extends StatefulWidget {
   final PlaceLocation placesLocation;
-  final bool _isReadOnly = false;
+  final bool isReadOnly;
 
-  const MapPage({
-    super.key,
-    this.placesLocation = const PlaceLocation(
-      latitude: 37.4219983,
-      longitude: -122.084,
-    ),
-  });
+  const MapPage(
+      {super.key,
+      this.placesLocation = const PlaceLocation(
+        latitude: 37.4219983,
+        longitude: -122.084,
+      ),
+      this.isReadOnly = false});
 
   @override
   MapPageState createState() => MapPageState();
@@ -49,13 +49,13 @@ class MapPageState extends State<MapPage> {
           ),
           zoom: 13,
         ),
-        onTap: widget._isReadOnly ? null : _selectPosition,
-        markers: _pickedPosition == null
+        onTap: widget.isReadOnly ? null : _selectPosition,
+        markers: (_pickedPosition == null && !widget.isReadOnly)
             ? {}
             : {
                 Marker(
                   markerId: MarkerId('p1'),
-                  position: _pickedPosition!,
+                  position: _pickedPosition ?? widget.placesLocation.toLatLng(),
                 ),
               },
       ),

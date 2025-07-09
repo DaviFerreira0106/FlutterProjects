@@ -4,6 +4,7 @@ import 'package:great_places/utils/app_routes.dart';
 import 'package:great_places/page/places_form_page.dart';
 import 'package:provider/provider.dart';
 import 'package:great_places/providers/great_places.dart';
+import 'package:great_places/page/places_detail_page.dart';
 
 void main() => runApp(GreatPlacesApp());
 
@@ -25,6 +26,7 @@ class GreatPlacesApp extends StatelessWidget {
         home: PlacesListPage(),
         routes: {
           AppRoutes.placeForm: (context) => PlacesFormPage(),
+          AppRoutes.placeDetail: (context) => PlacesDetailPage(),
         },
       ),
     );
