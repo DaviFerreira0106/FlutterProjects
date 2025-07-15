@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:chat/pages/loading_page.dart';
+import 'package:chat/pages/auth_page.dart';
 
 void main() => runApp(ChatApp());
 
@@ -15,8 +15,14 @@ class ChatApp extends StatelessWidget {
           primary: Colors.blue,
         ),
         useMaterial3: true,
+        buttonTheme: ButtonThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.lightBlue,
+            primary: Colors.blue,
+          ),
+        ),
       ),
-      home: LoadingPage(),
+      home: AuthPage(),
     );
   }
 }
