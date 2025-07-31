@@ -29,6 +29,9 @@ class ChatApp extends StatelessWidget {
               primary: Colors.blue,
             ),
           ),
+          appBarTheme: AppBarTheme(
+            centerTitle: true,
+          ),
         ),
         home: AuthOrHomePage(),
       ),

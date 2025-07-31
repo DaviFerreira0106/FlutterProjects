@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "739958239600",
+    "project_id": "chat-2b519",
+    "storage_bucket": "chat-2b519.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739958239600:android:ea2000243a0cf9dabc1fb5",
+        "android_client_info": {
+          "package_name": "br.com.davi.chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcRAa0MIpF1hE7pgcmXBk24KsVvf9S6BI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
