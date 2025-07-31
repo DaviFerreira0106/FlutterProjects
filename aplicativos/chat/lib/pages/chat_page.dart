@@ -60,7 +60,7 @@ class ChatPage extends StatelessWidget {
                   right: 5,
                   child: CircleAvatar(
                     backgroundColor: Colors.red.shade800,
-                    maxRadius: 11,
+                    maxRadius: 10,
                     child: Text(
                       '${Provider.of<ChatNotificationService>(context).itemCount}',
                       style: TextStyle(fontSize: 14, color: Colors.white),
