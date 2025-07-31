@@ -6,6 +6,8 @@ class ChatNotificationService with ChangeNotifier{
 
   List<ChatNotification> get items => [..._items];
 
+  int get itemCount => _items.length;
+
   void add({required ChatNotification notification}) {
     _items.add(notification);
     notifyListeners();
