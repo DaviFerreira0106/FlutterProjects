@@ -1,4 +1,4 @@
-package com.example.chat
+package br.com.davi.chat
 
 import io.flutter.embedding.android.FlutterActivity
 
