@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(const NativeCodeApp());
 
@@ -14,12 +15,20 @@ class NativeCodeAppState extends State<NativeCodeApp> {
   int _b = 0;
   int _sum = 0;
 
+  Future<void> _calcSum() async {
+    final channel = MethodChannel('davi.com.br/native_code');
 
-  
-  void _calcSum() {
-    setState(() {
-      _sum = _a + _b;
-    });
+    try {
+      final sum = await channel.invokeMethod('calcSum', {'a': _a, 'b': _b});
+
+      setState(() {
+        _sum = sum;
+      });
+    } on PlatformException {
+      setState(() {
+        _sum = 0;
+      });
+    }
   }
 
   @override
