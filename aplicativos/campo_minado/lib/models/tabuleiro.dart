@@ -37,13 +37,12 @@ class Tabuleiro {
   void _sortearMinas() {
     int sorteadas = 0;
 
-    int index = Random().nextInt(_campos.length);
-
     if (qtdDeBombas > linhas * colunas) {
       return;
     }
 
     while (sorteadas < qtdDeBombas) {
+      int index = Random().nextInt(_campos.length);
       if (!_campos.elementAt(index).minado) {
         sorteadas++;
         _campos.elementAt(index).minar();
